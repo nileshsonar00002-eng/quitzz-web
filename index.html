@@ -1,0 +1,1224 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>quitzZ - QUIT. BREATHE. FREE. | Gamified Quit Smoking App</title>
+  <meta name="description" content="Beat nicotine cravings in 60 seconds, track biological recovery in real time, and earn coins for every smoke-free day with quitzZ." />
+  <!-- Favicons -->
+  <link rel="icon" type="image/x-icon" href="favicon.ico?v=4" />
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png?v=4" />
+  <link rel="icon" type="image/png" sizes="64x64" href="favicon.png?v=4" />
+  <link rel="icon" type="image/png" sizes="192x192" href="favicon-192.png?v=4" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=4" />
+  
+  <!-- Open Graph / Meta -->
+  <meta property="og:title" content="quitzZ - Gamified Quit Smoking App" />
+  <meta property="og:description" content="Breathe free. Reclaim your health, wealth, and peace of mind with quitzZ." />
+  <meta property="og:image" content="app-icon.png" />
+  <meta property="og:type" content="website" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            obsidian: '#0A0A0A',
+            charcoal: '#141414',
+            'charcoal-light': '#1A1A1A',
+            'charcoal-border': 'rgba(255, 255, 255, 0.08)',
+            neon: {
+              DEFAULT: '#84CC16',
+              glow: '#A3E635',
+              deep: '#0D2818',
+              emerald: '#22C55E'
+            },
+            amber: {
+              gold: '#F59E0B',
+              glow: '#FCD34D'
+            }
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            display: ['"Space Grotesk"', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="bg-obsidian text-neutral-100 min-h-screen selection:bg-neon selection:text-black">
+
+  <!-- =========================================================================
+       1. NAVIGATION BAR (Sticky Glassmorphism)
+       ========================================================================= -->
+  <header class="fixed top-0 left-0 right-0 z-50 glass-nav transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        
+        <!-- Official Logo & Tagline -->
+        <a href="#" class="flex items-center gap-3 group">
+          <img src="logo-cropped.png" alt="quitzZ Official Logo" class="h-10 sm:h-12 w-auto object-contain rounded-lg group-hover:scale-105 transition-transform drop-shadow-[0_0_12px_rgba(132,204,22,0.35)]" />
+          <div class="hidden sm:flex flex-col border-l border-neutral-800 pl-3">
+            <span class="text-[10px] font-extrabold tracking-widest text-[#84CC16] uppercase">
+              QUIT. BREATHE. FREE.
+            </span>
+            <span class="text-[9px] text-neutral-500 font-medium tracking-tight">Gamified Cessation</span>
+          </div>
+        </a>
+
+        <!-- Desktop Navigation Links -->
+        <nav class="hidden md:flex items-center space-x-8 text-sm font-medium text-neutral-300">
+          <a href="#features" class="hover:text-neon transition-colors">Features</a>
+          <a href="#calculator" class="hover:text-neon transition-colors">Savings Calculator</a>
+          <a href="#craving-breaker" class="hover:text-neon transition-colors flex items-center gap-1.5">
+            <span class="relative flex h-2 w-2">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-neon opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2 w-2 bg-neon"></span>
+            </span>
+            60s Craving Tool
+          </a>
+          <a href="#timeline" class="hover:text-neon transition-colors">Health Timeline</a>
+          <a href="#reviews" class="hover:text-neon transition-colors">Reviews</a>
+        </nav>
+
+        <!-- Right CTA Button -->
+        <div class="hidden md:flex items-center gap-4">
+          <a href="#download" class="neon-btn px-5 py-2.5 rounded-full text-sm font-bold text-black flex items-center gap-2">
+            <i data-lucide="smartphone" class="w-4 h-4 text-black"></i>
+            <span>Get quitzZ App</span>
+          </a>
+        </div>
+
+        <!-- Mobile Menu Toggle Button -->
+        <div class="flex md:hidden">
+          <button id="mobile-menu-btn" type="button" aria-expanded="false" class="p-2 rounded-lg bg-charcoal border border-charcoal-border text-neutral-300 hover:text-white focus:outline-none">
+            <i data-lucide="menu" class="w-6 h-6"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Drawer Menu -->
+    <div id="mobile-menu" class="hidden md:hidden bg-charcoal/95 backdrop-blur-xl border-b border-charcoal-border px-6 py-6 space-y-4">
+      <div class="pb-2 flex items-center justify-between">
+        <img src="logo-cropped.png" alt="quitzZ Logo" class="h-8 w-auto object-contain" />
+        <span class="text-[10px] font-bold text-[#84CC16] tracking-widest uppercase">QUIT. BREATHE. FREE.</span>
+      </div>
+      <a href="#features" class="mobile-nav-link block text-base font-medium text-neutral-200 hover:text-neon">Features</a>
+      <a href="#calculator" class="mobile-nav-link block text-base font-medium text-neutral-200 hover:text-neon">Savings Calculator</a>
+      <a href="#craving-breaker" class="mobile-nav-link block text-base font-medium text-neon">60s Craving Tool (Interactive)</a>
+      <a href="#timeline" class="mobile-nav-link block text-base font-medium text-neutral-200 hover:text-neon">Health Timeline</a>
+      <a href="#reviews" class="mobile-nav-link block text-base font-medium text-neutral-200 hover:text-neon">User Reviews</a>
+      <div class="pt-4 border-t border-charcoal-border">
+        <a href="#download" class="mobile-nav-link w-full neon-btn py-3 rounded-xl text-center text-sm font-bold text-black block">
+          Download quitzZ Free
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- =========================================================================
+       2. HERO SECTION
+       ========================================================================= -->
+  <section class="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden bg-radial-gradient">
+    <!-- Ambient glowing backdrop blobs -->
+    <div class="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[700px] bg-radial-blob pointer-events-none"></div>
+    <div class="absolute top-1/3 right-10 w-[450px] h-[450px] bg-radial-blob-gold pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+        
+        <!-- Left Hero Copy -->
+        <div class="lg:col-span-7 text-center lg:text-left space-y-6">
+          
+          <!-- Trust Badge -->
+          <div class="inline-flex items-center gap-2.5 px-4 py-2 rounded-full glass-card border-[#84CC16]/30 text-[#84CC16] text-xs font-semibold tracking-wide">
+            <span class="flex h-2 w-2 rounded-full bg-[#84CC16] animate-ping"></span>
+            <span>25,000+ Smokers Breathing Free on quitzZ</span>
+            <span class="text-neutral-500">•</span>
+            <span class="text-amber-400 font-bold flex items-center gap-1">
+              <i data-lucide="star" class="w-3.5 h-3.5 fill-amber-400 text-amber-400"></i> 4.9 Rating
+            </span>
+          </div>
+
+          <!-- Main Headline -->
+          <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-[1.12]">
+            Breathe Free.<br />
+            Reclaim Your <span class="text-transparent bg-clip-text bg-gradient-to-r from-white via-lime-300 to-[#84CC16]">Health</span>, <span class="gradient-text-gold">Wealth</span> & Mind.
+          </h1>
+
+          <!-- Subheadline -->
+          <p class="text-lg sm:text-xl text-neutral-400 max-w-2xl mx-auto lg:mx-0 font-normal leading-relaxed">
+            Beat sudden cravings in <span class="text-lime-400 font-semibold">60 seconds</span>, track real-time biological recovery, and earn <span class="text-amber-300 font-semibold">Z-Coins</span> for every clean breath you take with <strong class="text-white">quitzZ</strong>.
+          </p>
+
+          <!-- CTA Store Buttons (Google Play Focused) -->
+          <div class="pt-2 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+            <!-- Google Play Store Button (Primary) -->
+            <a href="#download" class="w-full sm:w-auto px-8 py-4 rounded-2xl bg-gradient-to-r from-neutral-900 via-neutral-900 to-neutral-800 hover:to-neutral-700 border-2 border-[#84CC16]/60 hover:border-[#84CC16] transition-all flex items-center justify-center gap-4 shadow-xl shadow-[#84CC16]/10 group">
+              <div class="w-10 h-10 rounded-xl bg-[#84CC16]/15 flex items-center justify-center group-hover:scale-110 transition-transform">
+                <i data-lucide="play" class="w-6 h-6 text-[#84CC16] fill-[#84CC16]"></i>
+              </div>
+              <div class="text-left">
+                <div class="text-[11px] uppercase font-bold text-lime-400 tracking-wider">Available on</div>
+                <div class="text-base font-extrabold text-white tracking-wide">Google Play Store</div>
+              </div>
+            </a>
+          </div>
+
+          <!-- Micro-proof Highlights -->
+          <div class="pt-4 flex flex-wrap items-center justify-center lg:justify-start gap-6 text-xs text-neutral-400">
+            <div class="flex items-center gap-1.5">
+              <i data-lucide="shield-check" class="w-4 h-4 text-[#84CC16]"></i>
+              <span>100% Science-Backed (CBT & Vagus Reset)</span>
+            </div>
+            <div class="flex items-center gap-1.5">
+              <i data-lucide="lock" class="w-4 h-4 text-amber-400"></i>
+              <span>Zero Ads & Strict Privacy</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Hero Visual: 3D Dark Mode App Mockups -->
+        <div class="lg:col-span-5 relative flex justify-center items-center">
+          
+          <!-- Outer Phone Frame Mockup -->
+          <div class="relative w-[300px] sm:w-[330px] rounded-[42px] p-3 bg-gradient-to-b from-neutral-700 via-neutral-900 to-black border-2 border-neutral-700 shadow-2xl shadow-emerald-950/40">
+            
+            <!-- Dynamic Island / Speaker Notch -->
+            <div class="absolute top-6 left-1/2 -translate-x-1/2 w-24 h-4 bg-black rounded-full z-30"></div>
+            
+            <!-- Screen Content -->
+            <div class="w-full bg-obsidian rounded-[34px] p-5 pt-8 overflow-hidden relative border border-neutral-800 space-y-4">
+              
+              <!-- App Top Bar with Logo -->
+              <div class="flex items-center justify-between text-xs pt-2">
+                <div class="flex items-center gap-2">
+                  <img src="logo-cropped.png" alt="quitzZ icon" class="h-4 w-auto object-contain" />
+                  <span class="font-bold text-white tracking-wide">Day 14 Clean</span>
+                </div>
+                <div class="gold-badge px-2.5 py-1 rounded-full text-[11px] font-bold flex items-center gap-1">
+                  <i data-lucide="coins" class="w-3 h-3 text-amber-400"></i>
+                  <span>2,450 ZC</span>
+                </div>
+              </div>
+
+              <!-- Smoke-Free Timer Card -->
+              <div class="glass-card p-4 rounded-2xl border border-[#84CC16]/20 text-center space-y-1">
+                <span class="text-[10px] uppercase tracking-wider text-[#84CC16] font-semibold">Smoke-Free Streak</span>
+                <div class="font-display text-2xl font-extrabold text-white">14d : 08h : 32m</div>
+                <p class="text-[11px] text-neutral-400">Next milestone: 21-Day Habit Shield</p>
+              </div>
+
+              <!-- Animated Lung Recovery Visual -->
+              <div class="glass-card p-4 rounded-2xl border border-neutral-800 text-center relative overflow-hidden">
+                <div class="flex justify-between items-center text-xs mb-2">
+                  <span class="text-neutral-300 font-medium flex items-center gap-1">
+                    <i data-lucide="activity" class="w-3.5 h-3.5 text-[#84CC16]"></i> Lung Oxygen
+                  </span>
+                  <span class="text-[#84CC16] font-bold">98% Normal</span>
+                </div>
+                <div class="w-full bg-neutral-800 rounded-full h-2 overflow-hidden">
+                  <div class="bg-gradient-to-r from-emerald-600 to-[#84CC16] h-2 rounded-full w-[98%]"></div>
+                </div>
+                <div class="mt-3 flex items-center justify-center gap-2">
+                  <div class="w-10 h-10 rounded-full bg-[#84CC16]/10 border border-[#84CC16]/30 flex items-center justify-center animate-pulse">
+                    <i data-lucide="heart" class="w-5 h-5 text-[#84CC16]"></i>
+                  </div>
+                  <div class="text-left">
+                    <div class="text-[11px] font-semibold text-white">Resting Pulse: 68 BPM</div>
+                    <div class="text-[10px] text-[#84CC16] font-medium">Cardiovascular risk -34%</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Instant Craving Panic Button inside Mockup -->
+              <a href="#craving-breaker" class="w-full py-3 rounded-xl bg-gradient-to-r from-[#84CC16] to-lime-400 text-black font-extrabold text-xs flex items-center justify-center gap-2 shadow-lg shadow-[#84CC16]/20 hover:opacity-95 transition-opacity">
+                <i data-lucide="wind" class="w-4 h-4"></i>
+                <span>Crush Sudden Craving (60s)</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Floating Badge 1: Real-Time Milestone -->
+          <div class="absolute -top-4 -left-6 sm:-left-12 glass-card p-3 rounded-2xl border border-[#84CC16]/30 shadow-xl animate-float z-20 flex items-center gap-3">
+            <div class="w-9 h-9 rounded-xl bg-[#84CC16]/20 text-[#84CC16] flex items-center justify-center font-bold">
+              <i data-lucide="zap" class="w-5 h-5 text-[#84CC16]"></i>
+            </div>
+            <div>
+              <div class="text-[11px] text-neutral-400 font-medium">CO Poison Drops</div>
+              <div class="text-xs font-bold text-white">0.0% Non-Smoker Level</div>
+            </div>
+          </div>
+
+          <!-- Floating Badge 2: Money Saved -->
+          <div class="absolute -bottom-6 -right-4 sm:-right-8 glass-card p-3.5 rounded-2xl border border-amber-500/30 shadow-xl animate-float-reverse z-20 flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center font-bold">
+              <span class="text-base">₹</span>
+            </div>
+            <div>
+              <div class="text-[11px] text-neutral-400 font-medium">Saved This Month</div>
+              <div class="text-sm font-extrabold text-amber-400">+₹5,400</div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       3. LIVE SAVINGS & HEALTH CALCULATOR SECTION
+       ========================================================================= -->
+  <section id="calculator" class="py-20 md:py-28 relative bg-obsidian border-t border-charcoal-border">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Section Header -->
+      <div class="text-center max-w-3xl mx-auto space-y-4 mb-16">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-bold uppercase tracking-wider">
+          <i data-lucide="calculator" class="w-3.5 h-3.5"></i>
+          Interactive ROI Engine
+        </div>
+        <h2 class="font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white">
+          See What Quitting Gives You Back.
+        </h2>
+        <p class="text-neutral-400 text-base sm:text-lg">
+          Slide to match your smoking habit and watch your financial and biological wealth return in real-time with <span class="text-[#84CC16] font-bold">quitzZ</span>.
+        </p>
+      </div>
+
+      <!-- Calculator Interactive Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+        
+        <!-- Inputs Card (5 Cols) -->
+        <div class="lg:col-span-5 glass-card p-6 sm:p-8 rounded-3xl border border-charcoal-border flex flex-col justify-between space-y-8">
+          <div>
+            <div class="flex items-center justify-between mb-6">
+              <h3 class="text-xl font-bold text-white flex items-center gap-2">
+                <i data-lucide="sliders" class="w-5 h-5 text-[#84CC16]"></i>
+                Your Daily Habit
+              </h3>
+              <span class="text-[11px] font-semibold px-2.5 py-1 rounded-full bg-[#84CC16]/10 text-[#84CC16] border border-[#84CC16]/30">Live Calculator</span>
+            </div>
+
+            <!-- Input 1: Sticks per day with Slider + Number Box + Quick Preset Chips -->
+            <div class="space-y-3 mb-8">
+              <div class="flex justify-between items-center">
+                <label for="calc-sticks" class="text-sm font-semibold text-neutral-300">Cigarettes Smoked Per Day</label>
+                <div class="flex items-center gap-1.5 bg-neutral-900 border border-neutral-700 px-2.5 py-1 rounded-xl">
+                  <input type="number" id="calc-sticks-num" min="1" max="100" value="12" class="w-12 bg-transparent text-right font-display font-extrabold text-lg text-[#84CC16] focus:outline-none" />
+                  <span class="text-xs text-neutral-400 font-medium">sticks</span>
+                </div>
+              </div>
+              <input type="range" id="calc-sticks" min="1" max="50" value="12" class="w-full cursor-pointer accent-[#84CC16]" />
+              
+              <!-- Quick Preset Buttons -->
+              <div class="flex flex-wrap gap-1.5 pt-1">
+                <button type="button" class="stick-preset text-[11px] px-2.5 py-1 rounded-lg bg-neutral-900 hover:bg-[#84CC16]/20 border border-neutral-800 text-neutral-300 hover:text-[#84CC16] transition-colors" data-val="5">5 sticks</button>
+                <button type="button" class="stick-preset text-[11px] px-2.5 py-1 rounded-lg bg-neutral-900 hover:bg-[#84CC16]/20 border border-neutral-800 text-neutral-300 hover:text-[#84CC16] transition-colors" data-val="10">10 sticks</button>
+                <button type="button" class="stick-preset text-[11px] px-2.5 py-1 rounded-lg bg-[#84CC16]/20 border border-[#84CC16]/40 text-[#84CC16] font-bold transition-colors" data-val="12">12 sticks</button>
+                <button type="button" class="stick-preset text-[11px] px-2.5 py-1 rounded-lg bg-neutral-900 hover:bg-[#84CC16]/20 border border-neutral-800 text-neutral-300 hover:text-[#84CC16] transition-colors" data-val="20">20 sticks (1 pack)</button>
+                <button type="button" class="stick-preset text-[11px] px-2.5 py-1 rounded-lg bg-neutral-900 hover:bg-[#84CC16]/20 border border-neutral-800 text-neutral-300 hover:text-[#84CC16] transition-colors" data-val="30">30 sticks</button>
+              </div>
+            </div>
+
+            <!-- Input 2: Price per stick with Slider + Number Box + Quick Preset Chips -->
+            <div class="space-y-3">
+              <div class="flex justify-between items-center">
+                <label for="calc-price" class="text-sm font-semibold text-neutral-300">Cost Per Stick (₹)</label>
+                <div class="flex items-center gap-1 bg-neutral-900 border border-neutral-700 px-2.5 py-1 rounded-xl">
+                  <span class="text-sm text-amber-400 font-bold">₹</span>
+                  <input type="number" id="calc-price-num" min="1" max="100" value="18" class="w-12 bg-transparent text-right font-display font-extrabold text-lg text-amber-400 focus:outline-none" />
+                </div>
+              </div>
+              <input type="range" id="calc-price" min="5" max="40" value="18" class="w-full cursor-pointer accent-amber-500" />
+              
+              <!-- Quick Preset Buttons for Price -->
+              <div class="flex flex-wrap gap-1.5 pt-1">
+                <button type="button" class="price-preset text-[11px] px-2.5 py-1 rounded-lg bg-neutral-900 hover:bg-amber-500/20 border border-neutral-800 text-neutral-300 hover:text-amber-400 transition-colors" data-val="7">₹7 (Mini)</button>
+                <button type="button" class="price-preset text-[11px] px-2.5 py-1 rounded-lg bg-neutral-900 hover:bg-amber-500/20 border border-neutral-800 text-neutral-300 hover:text-amber-400 transition-colors" data-val="12">₹12 (Regular)</button>
+                <button type="button" class="price-preset text-[11px] px-2.5 py-1 rounded-lg bg-amber-500/20 border border-amber-500/40 text-amber-400 font-bold transition-colors" data-val="18">₹18 (King Size)</button>
+                <button type="button" class="price-preset text-[11px] px-2.5 py-1 rounded-lg bg-neutral-900 hover:bg-amber-500/20 border border-neutral-800 text-neutral-300 hover:text-amber-400 transition-colors" data-val="25">₹25 (Premium)</button>
+                <button type="button" class="price-preset text-[11px] px-2.5 py-1 rounded-lg bg-neutral-900 hover:bg-amber-500/20 border border-neutral-800 text-neutral-300 hover:text-amber-400 transition-colors" data-val="35">₹35 (Imported)</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Micro note -->
+          <div class="p-4 rounded-2xl bg-neutral-900/60 border border-neutral-800 text-xs text-neutral-400 space-y-1">
+            <div class="font-semibold text-neutral-200 flex items-center gap-1.5">
+              <i data-lucide="info" class="w-4 h-4 text-[#84CC16]"></i> Did You Know?
+            </div>
+            <p>Every single cigarette costs an average of 11 minutes of biological life expectancy and burns <span id="calc-daily-cost-note" class="text-white font-bold">₹216</span> of your hard-earned money every day.</p>
+          </div>
+        </div>
+
+        <!-- Outputs Card (7 Cols) -->
+        <div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
+          
+          <!-- Monthly Savings -->
+          <div class="glass-card-interactive p-6 rounded-3xl border border-charcoal-border flex flex-col justify-between">
+            <div class="flex items-center justify-between text-neutral-400 text-xs font-semibold mb-3">
+              <span>MONTHLY SAVINGS</span>
+              <div class="w-8 h-8 rounded-full bg-[#84CC16]/10 text-[#84CC16] flex items-center justify-center">
+                <i data-lucide="wallet" class="w-4 h-4"></i>
+              </div>
+            </div>
+            <div>
+              <div id="calc-monthly-savings" class="font-display text-3xl sm:text-4xl font-extrabold text-[#84CC16]">₹6,480</div>
+              <p class="text-xs text-neutral-400 mt-1">Extra cash in your pocket every 30 days</p>
+            </div>
+          </div>
+
+          <!-- Yearly Savings -->
+          <div class="glass-card-interactive p-6 rounded-3xl border border-amber-500/20 flex flex-col justify-between bg-gradient-to-br from-charcoal to-amber-950/20">
+            <div class="flex items-center justify-between text-amber-400/90 text-xs font-semibold mb-3">
+              <span>1-YEAR CASH VAULT</span>
+              <div class="w-8 h-8 rounded-full bg-amber-500/10 text-amber-400 flex items-center justify-center">
+                <i data-lucide="trophy" class="w-4 h-4"></i>
+              </div>
+            </div>
+            <div>
+              <div id="calc-yearly-savings" class="font-display text-3xl sm:text-4xl font-extrabold text-amber-400">₹78,840</div>
+              <p class="text-xs text-neutral-400 mt-1">Enough for an international trip or high-end smartphone</p>
+            </div>
+          </div>
+
+          <!-- 5-Year Compounded Return -->
+          <div class="glass-card-interactive p-6 rounded-3xl border border-charcoal-border flex flex-col justify-between">
+            <div class="flex items-center justify-between text-neutral-400 text-xs font-semibold mb-3">
+              <span>5-YEAR ACCUMULATED</span>
+              <div class="w-8 h-8 rounded-full bg-[#84CC16]/10 text-[#84CC16] flex items-center justify-center">
+                <i data-lucide="trending-up" class="w-4 h-4"></i>
+              </div>
+            </div>
+            <div>
+              <div id="calc-5yr-savings" class="font-display text-3xl sm:text-4xl font-extrabold text-white">₹3,94,200</div>
+              <p class="text-xs text-neutral-400 mt-1">Invested at 12% CAGR: <span id="calc-5yr-invested" class="text-emerald-400 font-bold">₹5.2 Lakhs</span></p>
+            </div>
+          </div>
+
+          <!-- Biological Life Regained -->
+          <div class="glass-card-interactive p-6 rounded-3xl border border-[#84CC16]/20 flex flex-col justify-between bg-gradient-to-br from-charcoal to-emerald-950/30">
+            <div class="flex items-center justify-between text-[#84CC16] text-xs font-semibold mb-3">
+              <span>LIFE REGAINED (YEARLY)</span>
+              <div class="w-8 h-8 rounded-full bg-[#84CC16]/20 text-[#84CC16] flex items-center justify-center">
+                <i data-lucide="heart-pulse" class="w-4 h-4"></i>
+              </div>
+            </div>
+            <div>
+              <div id="calc-life-regained" class="font-display text-3xl sm:text-4xl font-extrabold text-[#84CC16]">33.5 Days</div>
+              <p class="text-xs text-neutral-400 mt-1">
+                Avoiding <span id="calc-cigs-avoided" class="text-white font-bold">4,380 sticks</span> of poison every year
+              </p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Quick Real World Milestone Comparison -->
+      <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="glass-card p-4 rounded-2xl border border-charcoal-border flex items-center gap-3">
+          <div class="p-2.5 rounded-xl bg-neutral-800 text-amber-400">
+            <i data-lucide="plane" class="w-5 h-5"></i>
+          </div>
+          <div class="text-xs">
+            <div class="font-bold text-white flex items-center justify-between gap-2">
+              <span>In 6 Months</span>
+              <span id="milestone-6m" class="text-amber-400 font-extrabold">₹38,880</span>
+            </div>
+            <div class="text-neutral-400">Flight tickets to Thailand / Goa vacation</div>
+          </div>
+        </div>
+
+        <div class="glass-card p-4 rounded-2xl border border-charcoal-border flex items-center gap-3">
+          <div class="p-2.5 rounded-xl bg-neutral-800 text-[#84CC16]">
+            <i data-lucide="smartphone" class="w-5 h-5"></i>
+          </div>
+          <div class="text-xs">
+            <div class="font-bold text-white flex items-center justify-between gap-2">
+              <span>In 12 Months</span>
+              <span id="milestone-12m" class="text-[#84CC16] font-extrabold">₹78,840</span>
+            </div>
+            <div class="text-neutral-400">Brand new iPhone 16 Pro / Flagship</div>
+          </div>
+        </div>
+
+        <div class="glass-card p-4 rounded-2xl border border-charcoal-border flex items-center gap-3">
+          <div class="p-2.5 rounded-xl bg-neutral-800 text-lime-400">
+            <i data-lucide="shield" class="w-5 h-5"></i>
+          </div>
+          <div class="text-xs">
+            <div class="font-bold text-white flex items-center justify-between gap-2">
+              <span>In 3 Years</span>
+              <span id="milestone-3y" class="text-lime-400 font-extrabold">₹2,36,520</span>
+            </div>
+            <div class="text-neutral-400">Complete emergency safety net & clean lungs</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       4. INTERACTIVE 60-SECOND CRAVING BREAKER SIMULATOR
+       ========================================================================= -->
+  <section id="craving-breaker" class="py-20 md:py-28 relative bg-radial-gradient border-t border-charcoal-border">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Heading -->
+      <div class="text-center space-y-4 mb-12">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#84CC16]/10 border border-[#84CC16]/30 text-[#84CC16] text-xs font-bold uppercase tracking-wider">
+          <i data-lucide="wind" class="w-3.5 h-3.5"></i>
+          quitzZ Craving Breaker
+        </div>
+        <h2 class="font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white">
+          Craving Striking Right Now? <br />
+          <span class="text-transparent bg-clip-text bg-gradient-to-r from-white via-lime-300 to-[#84CC16]">Crush It In 60 Seconds.</span>
+        </h2>
+        <p class="text-neutral-400 max-w-2xl mx-auto text-base">
+          Nicotine spikes dopamine for 7 seconds, but somatic cravings peak at 60 seconds. Follow the rhythm below to reset your vagus nerve and dissolve the urge.
+        </p>
+      </div>
+
+      <!-- Breathing Simulator Box -->
+      <div class="glass-card rounded-3xl p-8 sm:p-12 border border-[#84CC16]/30 relative overflow-hidden text-center shadow-2xl">
+        
+        <!-- Visual Breathing Circle Component -->
+        <div class="my-6 flex justify-center items-center">
+          <div id="craving-circle" class="breathing-circle-outer w-48 h-48 sm:w-56 sm:h-56 rounded-full border-4 border-[#84CC16]/40 flex flex-col items-center justify-center relative shadow-lg bg-neutral-950/80">
+            <div class="absolute inset-2 rounded-full border border-neutral-800"></div>
+            
+            <!-- Timer countdown -->
+            <span id="craving-timer" class="font-display text-3xl sm:text-4xl font-extrabold text-white">60s</span>
+            <span class="text-[10px] uppercase font-bold text-[#84CC16] tracking-widest mt-1">4-4-4 Rhythm</span>
+          </div>
+        </div>
+
+        <!-- Dynamic Instructions -->
+        <div class="space-y-2 max-w-md mx-auto min-h-[70px]">
+          <h3 id="craving-instruction" class="text-xl sm:text-2xl font-bold text-white">
+            Ready to crush the urge?
+          </h3>
+          <p id="craving-subtext" class="text-sm text-neutral-400">
+            Click below to begin the 4-4-4 anti-craving cycle
+          </p>
+        </div>
+
+        <!-- Controls -->
+        <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+          <button id="craving-start-btn" class="neon-btn px-8 py-3.5 rounded-2xl text-black font-extrabold text-sm flex items-center justify-center gap-2 w-full sm:w-auto">
+            <i data-lucide="wind" class="w-5 h-5"></i>
+            <span>Start 60s Craving Reset</span>
+          </button>
+          
+          <button id="craving-reset-btn" class="px-6 py-3.5 rounded-2xl bg-neutral-900 hover:bg-neutral-800 border border-neutral-700 text-neutral-300 hover:text-white text-sm font-semibold flex items-center justify-center gap-2 w-full sm:w-auto transition-colors">
+            <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+            <span>Reset</span>
+          </button>
+        </div>
+
+        <!-- Reward Banner upon completion -->
+        <div id="craving-reward" class="hidden mt-8 p-6 rounded-2xl bg-gradient-to-r from-emerald-950/80 to-amber-950/80 border border-[#84CC16]/40 text-center space-y-3 animate-fade-in">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 text-xs font-bold">
+            <i data-lucide="sparkles" class="w-4 h-4"></i> CRAVING DESTROYED!
+          </div>
+          <h4 class="text-xl font-bold text-white">You just saved ₹18 and 11 minutes of life!</h4>
+          <p class="text-neutral-300 text-xs max-w-lg mx-auto">
+            Your brain just re-wired itself to handle stress without smoke. Open <strong class="text-[#84CC16]">quitzZ</strong> to bank <strong class="text-amber-400">+50 Z-Coins</strong> into your permanent vault.
+          </p>
+          <a href="#download" class="inline-block mt-2 px-6 py-2.5 rounded-xl bg-[#84CC16] text-black font-bold text-xs hover:bg-lime-400 transition-colors">
+            Claim Reward in App &rarr;
+          </a>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       5. CORE FEATURES GRID
+       ========================================================================= -->
+  <section id="features" class="py-20 md:py-28 bg-obsidian relative border-t border-charcoal-border">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Section Header -->
+      <div class="text-center max-w-3xl mx-auto space-y-4 mb-16">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#84CC16]/10 border border-[#84CC16]/30 text-[#84CC16] text-xs font-bold uppercase tracking-wider">
+          <i data-lucide="layers" class="w-3.5 h-3.5"></i>
+          Engineered for Victory
+        </div>
+        <h2 class="font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white">
+          Everything You Need to Stop For Good.
+        </h2>
+        <p class="text-neutral-400 text-base sm:text-lg">
+          Willpower alone fails 95% of the time. <strong class="text-white">quitzZ</strong> combines behavioural neuroscience, gamified rewards, and bio-tracking for permanent freedom.
+        </p>
+      </div>
+
+      <!-- Features 4-Column / 2x2 Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        
+        <!-- Feature 1: 60s Beat Craving Tool -->
+        <div class="glass-card-interactive p-8 rounded-3xl border border-charcoal-border space-y-4">
+          <div class="w-12 h-12 rounded-2xl bg-[#84CC16]/10 border border-[#84CC16]/30 text-[#84CC16] flex items-center justify-center">
+            <i data-lucide="wind" class="w-6 h-6"></i>
+          </div>
+          <h3 class="text-xl font-bold text-white">60s Craving Breaker</h3>
+          <p class="text-neutral-400 text-sm leading-relaxed">
+            Instant haptic breathing exercises and rapid cognitive distractions scientifically proven to lower acute nicotine panic in under one minute.
+          </p>
+          <div class="pt-2 text-xs font-semibold text-[#84CC16] flex items-center gap-1">
+            <span>Reduces craving intensity by 87%</span>
+          </div>
+        </div>
+
+        <!-- Feature 2: Scientific Health Timeline -->
+        <div class="glass-card-interactive p-8 rounded-3xl border border-charcoal-border space-y-4">
+          <div class="w-12 h-12 rounded-2xl bg-[#84CC16]/10 border border-[#84CC16]/30 text-[#84CC16] flex items-center justify-center">
+            <i data-lucide="activity" class="w-6 h-6"></i>
+          </div>
+          <h3 class="text-xl font-bold text-white">Scientific Bio-Timeline</h3>
+          <p class="text-neutral-400 text-sm leading-relaxed">
+            Watch your heart rate normalize, lung cilia regenerate, and coronary risk cut in half with real-time biological milestones verified by WHO data.
+          </p>
+          <div class="pt-2 text-xs font-semibold text-[#84CC16] flex items-center gap-1">
+            <span>20 mins to 10-year milestones</span>
+          </div>
+        </div>
+
+        <!-- Feature 3: Gamified Z-Coins -->
+        <div class="glass-card-interactive p-8 rounded-3xl border border-amber-500/20 space-y-4 bg-gradient-to-b from-charcoal to-amber-950/10">
+          <div class="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-400 flex items-center justify-center">
+            <i data-lucide="coins" class="w-6 h-6"></i>
+          </div>
+          <h3 class="text-xl font-bold text-white">Gamified Z-Coin Rewards</h3>
+          <p class="text-neutral-400 text-sm leading-relaxed">
+            Earn coins for every clean hour, mindful check-in, and hydration goal. Level up your avatar and unlock real-world reward partner vouchers.
+          </p>
+          <div class="pt-2 text-xs font-semibold text-amber-400 flex items-center gap-1">
+            <span>Daily quests & streak shields</span>
+          </div>
+        </div>
+
+        <!-- Feature 4: Personal Care & Routines -->
+        <div class="glass-card-interactive p-8 rounded-3xl border border-charcoal-border space-y-4">
+          <div class="w-12 h-12 rounded-2xl bg-[#84CC16]/10 border border-[#84CC16]/30 text-[#84CC16] flex items-center justify-center">
+            <i data-lucide="droplet" class="w-6 h-6"></i>
+          </div>
+          <h3 class="text-xl font-bold text-white">Hydration & Habit Swaps</h3>
+          <p class="text-neutral-400 text-sm leading-relaxed">
+            Replace the hand-to-mouth oral fixation with guided water rituals, sensory grounding, and morning mindful check-ins.
+          </p>
+          <div class="pt-2 text-xs font-semibold text-[#84CC16] flex items-center gap-1">
+            <span>Smart trigger journal</span>
+          </div>
+        </div>
+
+        <!-- Feature 5: SOS Panic Shield -->
+        <div class="glass-card-interactive p-8 rounded-3xl border border-charcoal-border space-y-4">
+          <div class="w-12 h-12 rounded-2xl bg-[#84CC16]/10 border border-[#84CC16]/30 text-[#84CC16] flex items-center justify-center">
+            <i data-lucide="shield-alert" class="w-6 h-6"></i>
+          </div>
+          <h3 class="text-xl font-bold text-white">Relapse Shield Protocol</h3>
+          <p class="text-neutral-400 text-sm leading-relaxed">
+            One-tap SOS button summons emergency cognitive reframing audio, distraction micro-games, and your emergency pledge buddy.
+          </p>
+          <div class="pt-2 text-xs font-semibold text-[#84CC16] flex items-center gap-1">
+            <span>Instant relapse prevention</span>
+          </div>
+        </div>
+
+        <!-- Feature 6: Community Milestones -->
+        <div class="glass-card-interactive p-8 rounded-3xl border border-charcoal-border space-y-4">
+          <div class="w-12 h-12 rounded-2xl bg-[#84CC16]/10 border border-[#84CC16]/30 text-[#84CC16] flex items-center justify-center">
+            <i data-lucide="users" class="w-6 h-6"></i>
+          </div>
+          <h3 class="text-xl font-bold text-white">Anonymous Squads</h3>
+          <p class="text-neutral-400 text-sm leading-relaxed">
+            Join squads of people who quit on the same date as you. Share daily wins, celebrate milestone badges, and keep each other accountable.
+          </p>
+          <div class="pt-2 text-xs font-semibold text-[#84CC16] flex items-center gap-1">
+            <span>Zero judgement community</span>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       6. SCIENTIFIC HEALTH TIMELINE
+       ========================================================================= -->
+  <section id="timeline" class="py-20 md:py-28 relative bg-radial-gradient border-t border-charcoal-border">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Section Header -->
+      <div class="text-center max-w-3xl mx-auto space-y-4 mb-16">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#84CC16]/10 border border-[#84CC16]/30 text-[#84CC16] text-xs font-bold uppercase tracking-wider">
+          <i data-lucide="clock" class="w-3.5 h-3.5"></i>
+          Biological Recovery Clock
+        </div>
+        <h2 class="font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white">
+          Your Body Rebuilds From Minute 20.
+        </h2>
+        <p class="text-neutral-400 text-base">
+          Here is the clinical roadmap of healing waiting for you when you stub out your last cigarette.
+        </p>
+      </div>
+
+      <!-- Step Timeline with Glowing Milestones -->
+      <div class="space-y-8 relative before:absolute before:inset-0 before:left-8 md:before:left-1/2 before:w-0.5 before:bg-gradient-to-b before:from-[#84CC16] before:via-emerald-500 before:to-amber-500">
+        
+        <!-- Step 1: 20 Mins -->
+        <div class="relative flex flex-col md:flex-row items-center justify-between group">
+          <div class="w-full md:w-5/12 text-left md:text-right pr-0 md:pr-8 pl-16 md:pl-0 order-2 md:order-1">
+            <div class="glass-card-interactive p-5 rounded-2xl border border-lime-500/30 hover:border-[#84CC16] transition-all space-y-2 shadow-[0_0_20px_-5px_rgba(132,204,22,0.15)]">
+              <!-- Glowing Badge -->
+              <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-lime-500/20 border border-lime-400 text-lime-300 text-xs font-black uppercase tracking-wider shadow-[0_0_15px_rgba(132,204,22,0.4)]">
+                <span class="w-2 h-2 rounded-full bg-[#84CC16] animate-ping"></span>
+                ⏱️ 20 MINUTES CLEAN
+              </div>
+              <h4 class="text-xl font-extrabold text-white text-transparent bg-clip-text bg-gradient-to-r from-white via-lime-200 to-[#84CC16] drop-shadow-[0_0_10px_rgba(132,204,22,0.4)]">
+                Heart Rate & Pulse Drop
+              </h4>
+              <p class="text-xs text-neutral-300 leading-relaxed">
+                Within 20 minutes, your elevated heart rate and blood pressure drop to non-smoker levels, warming up fingertips and toes.
+              </p>
+            </div>
+          </div>
+          <!-- Center Node -->
+          <div class="absolute left-4 md:left-1/2 -translate-x-1/2 w-9 h-9 rounded-full bg-charcoal border-2 border-[#84CC16] text-[#84CC16] flex items-center justify-center z-10 order-1 shadow-[0_0_15px_rgba(132,204,22,0.8)] ring-4 ring-black">
+            <i data-lucide="check" class="w-4 h-4"></i>
+          </div>
+          <div class="w-full md:w-5/12 pl-16 md:pl-8 order-3 hidden md:block">
+            <div class="glass-card px-4 py-2.5 rounded-xl border border-lime-500/30 text-xs text-lime-300 inline-flex items-center gap-2 font-mono shadow-[0_0_12px_rgba(132,204,22,0.2)]">
+              <span class="w-2 h-2 rounded-full bg-[#84CC16] animate-pulse"></span>
+              BP: 120/80 mmHg Normalizing
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 2: 8 Hours -->
+        <div class="relative flex flex-col md:flex-row items-center justify-between group">
+          <div class="w-full md:w-5/12 text-left md:text-right pr-0 md:pr-8 pl-16 md:pl-0 order-2 md:order-1 hidden md:block">
+            <div class="glass-card px-4 py-2.5 rounded-xl border border-emerald-500/30 text-xs text-emerald-300 inline-flex items-center gap-2 font-mono shadow-[0_0_12px_rgba(34,197,94,0.2)]">
+              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+              Oxygen Saturation: 99%
+            </div>
+          </div>
+          <!-- Center Node -->
+          <div class="absolute left-4 md:left-1/2 -translate-x-1/2 w-9 h-9 rounded-full bg-charcoal border-2 border-emerald-400 text-emerald-400 flex items-center justify-center z-10 order-1 shadow-[0_0_15px_rgba(34,197,94,0.8)] ring-4 ring-black">
+            <i data-lucide="check" class="w-4 h-4"></i>
+          </div>
+          <div class="w-full md:w-5/12 pl-16 md:pl-8 order-2 md:order-3">
+            <div class="glass-card-interactive p-5 rounded-2xl border border-emerald-500/30 hover:border-emerald-400 transition-all space-y-2 shadow-[0_0_20px_-5px_rgba(34,197,94,0.15)]">
+              <!-- Glowing Badge -->
+              <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-400 text-emerald-300 text-xs font-black uppercase tracking-wider shadow-[0_0_15px_rgba(34,197,94,0.4)]">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                🌬️ 8 HOURS CLEAN
+              </div>
+              <h4 class="text-xl font-extrabold text-white text-transparent bg-clip-text bg-gradient-to-r from-white via-emerald-200 to-emerald-400 drop-shadow-[0_0_10px_rgba(34,197,94,0.4)]">
+                Carbon Monoxide Clears by 50%
+              </h4>
+              <p class="text-xs text-neutral-300 leading-relaxed">
+                Poisonous CO gas clears out of your bloodstream. Fresh oxygen surges to muscles, organs, and brain cells.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 3: 48 Hours -->
+        <div class="relative flex flex-col md:flex-row items-center justify-between group">
+          <div class="w-full md:w-5/12 text-left md:text-right pr-0 md:pr-8 pl-16 md:pl-0 order-2 md:order-1">
+            <div class="glass-card-interactive p-5 rounded-2xl border border-cyan-500/30 hover:border-cyan-400 transition-all space-y-2 shadow-[0_0_20px_-5px_rgba(6,182,212,0.15)]">
+              <!-- Glowing Badge -->
+              <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/20 border border-cyan-400 text-cyan-300 text-xs font-black uppercase tracking-wider shadow-[0_0_15px_rgba(6,182,212,0.4)]">
+                <span class="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
+                ✨ 48 HOURS CLEAN
+              </div>
+              <h4 class="text-xl font-extrabold text-white text-transparent bg-clip-text bg-gradient-to-r from-white via-cyan-200 to-cyan-400 drop-shadow-[0_0_10px_rgba(6,182,212,0.4)]">
+                Taste & Smell Buds Awaken
+              </h4>
+              <p class="text-xs text-neutral-300 leading-relaxed">
+                Nerve endings damaged by smoke regenerate rapidly. Food tastes rich and vibrant, and nicotine is 100% purged from your body.
+              </p>
+            </div>
+          </div>
+          <!-- Center Node -->
+          <div class="absolute left-4 md:left-1/2 -translate-x-1/2 w-9 h-9 rounded-full bg-charcoal border-2 border-cyan-400 text-cyan-400 flex items-center justify-center z-10 order-1 shadow-[0_0_15px_rgba(6,182,212,0.8)] ring-4 ring-black">
+            <i data-lucide="check" class="w-4 h-4"></i>
+          </div>
+          <div class="w-full md:w-5/12 pl-16 md:pl-8 order-3 hidden md:block">
+            <div class="glass-card px-4 py-2.5 rounded-xl border border-cyan-500/30 text-xs text-cyan-300 inline-flex items-center gap-2 font-mono shadow-[0_0_12px_rgba(6,182,212,0.2)]">
+              <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
+              Nicotine Purged: 100%
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 4: 2 to 12 Weeks -->
+        <div class="relative flex flex-col md:flex-row items-center justify-between group">
+          <div class="w-full md:w-5/12 text-left md:text-right pr-0 md:pr-8 pl-16 md:pl-0 order-2 md:order-1 hidden md:block">
+            <div class="glass-card px-4 py-2.5 rounded-xl border border-teal-500/30 text-xs text-teal-300 inline-flex items-center gap-2 font-mono shadow-[0_0_12px_rgba(20,184,166,0.2)]">
+              <span class="w-2 h-2 rounded-full bg-teal-400 animate-pulse"></span>
+              Lung Capacity: +30%
+            </div>
+          </div>
+          <!-- Center Node -->
+          <div class="absolute left-4 md:left-1/2 -translate-x-1/2 w-9 h-9 rounded-full bg-charcoal border-2 border-teal-400 text-teal-400 flex items-center justify-center z-10 order-1 shadow-[0_0_15px_rgba(20,184,166,0.8)] ring-4 ring-black">
+            <i data-lucide="check" class="w-4 h-4"></i>
+          </div>
+          <div class="w-full md:w-5/12 pl-16 md:pl-8 order-2 md:order-3">
+            <div class="glass-card-interactive p-5 rounded-2xl border border-teal-500/30 hover:border-teal-400 transition-all space-y-2 shadow-[0_0_20px_-5px_rgba(20,184,166,0.15)]">
+              <!-- Glowing Badge -->
+              <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-500/20 border border-teal-400 text-teal-300 text-xs font-black uppercase tracking-wider shadow-[0_0_15px_rgba(20,184,166,0.4)]">
+                <span class="w-2 h-2 rounded-full bg-teal-400 animate-ping"></span>
+                🫁 2 - 12 WEEKS CLEAN
+              </div>
+              <h4 class="text-xl font-extrabold text-white text-transparent bg-clip-text bg-gradient-to-r from-white via-teal-200 to-teal-400 drop-shadow-[0_0_10px_rgba(20,184,166,0.4)]">
+                Lung Capacity Increases by 30%
+              </h4>
+              <p class="text-xs text-neutral-300 leading-relaxed">
+                Stairs and workouts become effortless. Lung cilia regain natural cleaning power, removing built-up phlegm and tar.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 5: 1 Year Gold Milestone -->
+        <div class="relative flex flex-col md:flex-row items-center justify-between group">
+          <div class="w-full md:w-5/12 text-left md:text-right pr-0 md:pr-8 pl-16 md:pl-0 order-2 md:order-1">
+            <div class="glass-card-interactive p-6 rounded-2xl border-2 border-amber-500/50 hover:border-amber-400 transition-all space-y-2.5 bg-gradient-to-br from-charcoal via-neutral-900 to-amber-950/30 shadow-[0_0_30px_-5px_rgba(245,158,11,0.3)]">
+              <!-- Glowing Gold Badge -->
+              <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/25 border border-amber-400 text-amber-300 text-xs font-black uppercase tracking-wider shadow-[0_0_20px_rgba(245,158,11,0.6)]">
+                <i data-lucide="trophy" class="w-3.5 h-3.5 text-amber-400"></i>
+                🏆 1 YEAR GOLD MILESTONE
+              </div>
+              <h4 class="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-100 via-amber-300 to-amber-500 drop-shadow-[0_0_15px_rgba(245,158,11,0.6)]">
+                Coronary Heart Risk Cut by 50%
+              </h4>
+              <p class="text-xs text-neutral-200 leading-relaxed font-medium">
+                Your excess risk of coronary heart disease drops to half that of a continuing smoker. Your cellular vitality is fully rejuvenated.
+              </p>
+            </div>
+          </div>
+          <!-- Center Node Gold -->
+          <div class="absolute left-4 md:left-1/2 -translate-x-1/2 w-10 h-10 rounded-full bg-charcoal border-2 border-amber-400 text-amber-400 flex items-center justify-center z-10 order-1 shadow-[0_0_20px_rgba(245,158,11,0.9)] ring-4 ring-black animate-pulse">
+            <i data-lucide="award" class="w-5 h-5"></i>
+          </div>
+          <div class="w-full md:w-5/12 pl-16 md:pl-8 order-3 hidden md:block">
+            <div class="gold-badge px-4 py-2.5 rounded-xl text-xs inline-flex items-center gap-2 font-mono font-bold shadow-[0_0_15px_rgba(245,158,11,0.3)]">
+              <i data-lucide="shield-check" class="w-4 h-4 text-amber-400"></i>
+              Coronary Risk: -50% Halved
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       7. SOCIAL PROOF & COMMUNITY MILESTONES
+       ========================================================================= -->
+  <section id="stats-section" class="py-16 bg-charcoal border-y border-charcoal-border relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+        
+        <!-- Stat 1 -->
+        <div class="space-y-1">
+          <div class="font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#84CC16] counter-val" data-target="10000" data-suffix="+">0</div>
+          <p class="text-xs sm:text-sm font-semibold text-neutral-400 uppercase tracking-wider">Cravings Crushed</p>
+        </div>
+
+        <!-- Stat 2 -->
+        <div class="space-y-1">
+          <div class="font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold text-amber-400 counter-val" data-target="50" data-prefix="₹" data-suffix="L+">0</div>
+          <p class="text-xs sm:text-sm font-semibold text-neutral-400 uppercase tracking-wider">Community Money Saved</p>
+        </div>
+
+        <!-- Stat 3 -->
+        <div class="space-y-1">
+          <div class="font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white counter-val" data-target="94" data-suffix="%">0</div>
+          <p class="text-xs sm:text-sm font-semibold text-neutral-400 uppercase tracking-wider">Relapse Reduction Rate</p>
+        </div>
+
+        <!-- Stat 4 -->
+        <div class="space-y-1">
+          <div class="font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold text-lime-400 counter-val" data-target="25000" data-suffix="+">0</div>
+          <p class="text-xs sm:text-sm font-semibold text-neutral-400 uppercase tracking-wider">Active Smoke-Free Users</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       8. TESTIMONIALS CAROUSEL
+       ========================================================================= -->
+  <section id="reviews" class="py-20 md:py-28 bg-obsidian relative">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center space-y-4 mb-14">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-bold uppercase tracking-wider">
+          <i data-lucide="message-square" class="w-3.5 h-3.5"></i>
+          Real Quitters, Real Freedom
+        </div>
+        <h2 class="font-display text-3xl sm:text-4xl font-extrabold text-white">
+          Stories From the Smoke-Free Side
+        </h2>
+      </div>
+
+      <!-- Carousel Container -->
+      <div class="relative glass-card rounded-3xl p-8 sm:p-12 border border-charcoal-border shadow-2xl">
+        
+        <!-- Slide 1 -->
+        <div class="testimonial-slide space-y-6">
+          <div class="flex items-center gap-1 text-amber-400">
+            <i data-lucide="star" class="w-5 h-5 fill-amber-400"></i>
+            <i data-lucide="star" class="w-5 h-5 fill-amber-400"></i>
+            <i data-lucide="star" class="w-5 h-5 fill-amber-400"></i>
+            <i data-lucide="star" class="w-5 h-5 fill-amber-400"></i>
+            <i data-lucide="star" class="w-5 h-5 fill-amber-400"></i>
+          </div>
+          <p class="text-lg sm:text-xl text-neutral-200 font-medium italic leading-relaxed">
+            "I smoked 20 cigarettes a day for 8 years. Whenever I had an urge at work, quitzZ's 60-second breathing tool stopped the panic immediately. I am now 120 days clean and saved over ₹45,000 for my family's first vacation."
+          </p>
+          <div class="flex items-center justify-between pt-4 border-t border-neutral-800">
+            <div class="flex items-center gap-3">
+              <div class="w-11 h-11 rounded-full bg-[#84CC16]/20 text-[#84CC16] font-bold flex items-center justify-center text-sm border border-[#84CC16]/40">
+                AK
+              </div>
+              <div>
+                <div class="text-sm font-bold text-white">Aditya Kapoor</div>
+                <div class="text-xs text-neutral-400">Smoke-Free for 120 Days • Saved ₹45,600</div>
+              </div>
+            </div>
+            <span class="text-xs px-3 py-1 rounded-full bg-[#84CC16]/10 text-[#84CC16] font-semibold hidden sm:inline-block">
+              Verified Quitter
+            </span>
+          </div>
+        </div>
+
+        <!-- Slide 2 -->
+        <div class="testimonial-slide space-y-6 hidden">
+          <div class="flex items-center gap-1 text-amber-400">
+            <i data-lucide="star" class="w-5 h-5 fill-amber-400"></i>
+            <i data-lucide="star" class="w-5 h-5 fill-amber-400"></i>
+            <i data-lucide="star" class="w-5 h-5 fill-amber-400"></i>
+            <i data-lucide="star" class="w-5 h-5 fill-amber-400"></i>
+            <i data-lucide="star" class="w-5 h-5 fill-amber-400"></i>
+          </div>
+          <p class="text-lg sm:text-xl text-neutral-200 font-medium italic leading-relaxed">
+            "The gamification in quitzZ is unmatched. Earning Z-Coins and seeing my lung recovery percentage in real time turned a terrifying ordeal into a game I actually wanted to win every single morning."
+          </p>
+          <div class="flex items-center justify-between pt-4 border-t border-neutral-800">
+            <div class="flex items-center gap-3">
+              <div class="w-11 h-11 rounded-full bg-amber-500/20 text-amber-400 font-bold flex items-center justify-center text-sm border border-amber-500/40">
+                PS
+              </div>
+              <div>
+                <div class="text-sm font-bold text-white">Pooja Sharma</div>
+                <div class="text-xs text-neutral-400">Smoke-Free for 90 Days • Level 14 Guardian</div>
+              </div>
+            </div>
+            <span class="text-xs px-3 py-1 rounded-full bg-[#84CC16]/10 text-[#84CC16] font-semibold hidden sm:inline-block">
+              Verified Quitter
+            </span>
+          </div>
+        </div>
+
+        <!-- Slide 3 -->
+        <div class="testimonial-slide space-y-6 hidden">
+          <div class="flex items-center gap-1 text-amber-400">
+            <i data-lucide="star" class="w-5 h-5 fill-amber-400"></i>
+            <i data-lucide="star" class="w-5 h-5 fill-amber-400"></i>
+            <i data-lucide="star" class="w-5 h-5 fill-amber-400"></i>
+            <i data-lucide="star" class="w-5 h-5 fill-amber-400"></i>
+            <i data-lucide="star" class="w-5 h-5 fill-amber-400"></i>
+          </div>
+          <p class="text-lg sm:text-xl text-neutral-200 font-medium italic leading-relaxed">
+            "As a doctor, I recommend quitzZ to my patients struggling with nicotine addiction. It targets the somatic feedback loop and replaces destructive triggers with mindful hydration and breathwork."
+          </p>
+          <div class="flex items-center justify-between pt-4 border-t border-neutral-800">
+            <div class="flex items-center gap-3">
+              <div class="w-11 h-11 rounded-full bg-[#84CC16]/20 text-[#84CC16] font-bold flex items-center justify-center text-sm border border-[#84CC16]/40">
+                DR
+              </div>
+              <div>
+                <div class="text-sm font-bold text-white">Dr. Rohan Mehta</div>
+                <div class="text-xs text-neutral-400">Pulmonologist &amp; Wellness Advocate</div>
+              </div>
+            </div>
+            <span class="text-xs px-3 py-1 rounded-full bg-[#84CC16]/10 text-[#84CC16] font-semibold hidden sm:inline-block">
+              Medical Expert
+            </span>
+          </div>
+        </div>
+
+        <!-- Carousel Navigation Arrows & Indicators -->
+        <div class="flex items-center justify-between mt-8 pt-4">
+          <div class="flex gap-2">
+            <button class="test-indicator w-3 h-3 rounded-full bg-[#84CC16] transition-all cursor-pointer" data-index="0"></button>
+            <button class="test-indicator w-3 h-3 rounded-full bg-neutral-700 transition-all cursor-pointer" data-index="1"></button>
+            <button class="test-indicator w-3 h-3 rounded-full bg-neutral-700 transition-all cursor-pointer" data-index="2"></button>
+          </div>
+
+          <div class="flex gap-2">
+            <button id="test-prev-btn" class="p-2 rounded-xl bg-neutral-900 border border-neutral-800 hover:border-[#84CC16] text-neutral-400 hover:text-white transition-colors">
+              <i data-lucide="chevron-left" class="w-5 h-5"></i>
+            </button>
+            <button id="test-next-btn" class="p-2 rounded-xl bg-neutral-900 border border-neutral-800 hover:border-[#84CC16] text-neutral-400 hover:text-white transition-colors">
+              <i data-lucide="chevron-right" class="w-5 h-5"></i>
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       9. FREQUENTLY ASKED QUESTIONS
+       ========================================================================= -->
+  <section class="py-20 bg-obsidian border-t border-charcoal-border">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center space-y-4 mb-14">
+        <h2 class="font-display text-3xl sm:text-4xl font-extrabold text-white">
+          Frequently Asked Questions
+        </h2>
+        <p class="text-neutral-400 text-sm sm:text-base">
+          Everything you need to know about starting your smoke-free journey with quitzZ.
+        </p>
+      </div>
+
+      <div class="space-y-4">
+        
+        <!-- FAQ 1 -->
+        <div class="faq-item glass-card rounded-2xl border border-charcoal-border overflow-hidden">
+          <button class="faq-btn w-full p-6 text-left flex justify-between items-center text-white font-bold text-base hover:text-[#84CC16] transition-colors">
+            <span>How does the 60-Second Craving Breaker work?</span>
+            <i data-lucide="chevron-down" class="faq-icon w-5 h-5 text-neutral-400 transition-transform"></i>
+          </button>
+          <div class="faq-content px-6 pb-6 text-neutral-400 text-sm leading-relaxed border-t border-neutral-800/50 pt-4">
+            Acute nicotine cravings peak between 45 and 90 seconds. The 60-second breathing tool uses structured box-breathing (4s Inhale, 4s Hold, 4s Exhale) to stimulate the vagus nerve, which drops your sympathetic fight-or-flight heart rate and breaks the neurochemical craving surge.
+          </div>
+        </div>
+
+        <!-- FAQ 2 -->
+        <div class="faq-item glass-card rounded-2xl border border-charcoal-border overflow-hidden">
+          <button class="faq-btn w-full p-6 text-left flex justify-between items-center text-white font-bold text-base hover:text-[#84CC16] transition-colors">
+            <span>What are Z-Coins and how do I earn them?</span>
+            <i data-lucide="chevron-down" class="faq-icon w-5 h-5 text-neutral-400 transition-transform"></i>
+          </button>
+          <div class="faq-content hidden px-6 pb-6 text-neutral-400 text-sm leading-relaxed border-t border-neutral-800/50 pt-4">
+            Z-Coins are quitzZ's gamified currency awarded for every clean hour, completing daily hydration checklists, crushing sudden cravings, and logging honest mood journals. You can redeem Z-Coins for avatar accessories, milestone badges, or discounts with health partners.
+          </div>
+        </div>
+
+        <!-- FAQ 3 -->
+        <div class="faq-item glass-card rounded-2xl border border-charcoal-border overflow-hidden">
+          <button class="faq-btn w-full p-6 text-left flex justify-between items-center text-white font-bold text-base hover:text-[#84CC16] transition-colors">
+            <span>What happens if I experience a relapse or slip-up?</span>
+            <i data-lucide="chevron-down" class="faq-icon w-5 h-5 text-neutral-400 transition-transform"></i>
+          </button>
+          <div class="faq-content hidden px-6 pb-6 text-neutral-400 text-sm leading-relaxed border-t border-neutral-800/50 pt-4">
+            Relapses are viewed as learning milestones, not failures. quitzZ provides a non-punitive "Streak Shield" and a root-cause trigger analysis to help you understand the emotional trigger behind the slip, reset quickly, and safeguard your biological progress.
+          </div>
+        </div>
+
+        <!-- FAQ 4 -->
+        <div class="faq-item glass-card rounded-2xl border border-charcoal-border overflow-hidden">
+          <button class="faq-btn w-full p-6 text-left flex justify-between items-center text-white font-bold text-base hover:text-[#84CC16] transition-colors">
+            <span>Is quitzZ free to use?</span>
+            <i data-lucide="chevron-down" class="faq-icon w-5 h-5 text-neutral-400 transition-transform"></i>
+          </button>
+          <div class="faq-content hidden px-6 pb-6 text-neutral-400 text-sm leading-relaxed border-t border-neutral-800/50 pt-4">
+            Yes! The core features of quitzZ including the 60s Craving Breaker, Live Savings Tracker, and Biological Timeline are 100% free to all quitters. Optional Pro features include personalized AI CBT coaching and deep biometric integrations.
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       10. FINAL HIGH-IMPACT CTA BANNER WITH QR CODE
+       ========================================================================= -->
+  <section id="download" class="py-20 md:py-28 relative bg-radial-gradient border-t border-charcoal-border overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      
+      <div class="glass-card rounded-[36px] p-8 sm:p-14 lg:p-16 border border-[#84CC16]/40 shadow-2xl relative overflow-hidden bg-gradient-to-br from-charcoal via-neutral-900 to-emerald-950/40">
+        
+        <!-- Decorative Ambient Light -->
+        <div class="absolute -right-20 -bottom-20 w-80 h-80 bg-[#84CC16]/20 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+          
+          <!-- Left CTA Text -->
+          <div class="lg:col-span-8 space-y-6 text-center lg:text-left">
+            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#84CC16]/10 border border-[#84CC16]/30 text-[#84CC16] text-xs font-bold uppercase tracking-wider">
+              <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+              Start Your Clean Breath Journey
+            </div>
+            
+            <h2 class="font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white leading-tight">
+              Ready to take your first <br class="hidden sm:inline" />
+              <span class="text-transparent bg-clip-text bg-gradient-to-r from-white via-lime-300 to-[#84CC16]">deep, clean breath?</span>
+            </h2>
+            
+            <p class="text-neutral-300 text-base sm:text-lg max-w-xl">
+              Join 25,000+ individuals who transformed cravings into coin rewards and reclaimed their health. Download <strong class="text-white">quitzZ</strong> free today.
+            </p>
+
+            <!-- Store Action Buttons (Google Play Only) -->
+            <div class="pt-2 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+              <a href="#" class="w-full sm:w-auto px-8 py-4 rounded-2xl bg-gradient-to-r from-neutral-900 to-neutral-800 hover:to-neutral-700 border-2 border-[#84CC16] text-white flex items-center justify-center gap-4 transition-all shadow-xl shadow-[#84CC16]/20 group">
+                <div class="w-10 h-10 rounded-xl bg-[#84CC16]/20 flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <i data-lucide="play" class="w-6 h-6 text-[#84CC16] fill-[#84CC16]"></i>
+                </div>
+                <div class="text-left">
+                  <div class="text-[11px] uppercase font-bold text-lime-400">Available on</div>
+                  <div class="text-base font-extrabold text-white tracking-wide">Google Play Store</div>
+                </div>
+              </a>
+            </div>
+          </div>
+
+          <!-- Right Desktop QR Code Box -->
+          <div class="lg:col-span-4 flex flex-col items-center justify-center text-center">
+            <div class="glass-card p-5 rounded-3xl border border-[#84CC16]/30 shadow-2xl space-y-3 bg-neutral-950/90">
+              
+              <!-- Simulated High-Res QR code SVG with center quitzZ brand -->
+              <div class="w-44 h-44 bg-white p-2.5 rounded-2xl flex items-center justify-center shadow-inner relative group">
+                <svg viewBox="0 0 100 100" class="w-full h-full" fill="#000000">
+                  <path d="M0,0 h30 v30 h-30 z M5,5 v20 h20 v-20 z M10,10 h10 v10 h-10 z M70,0 h30 v30 h-30 z M75,5 v20 h20 v-20 z M80,10 h10 v10 h-10 z M0,70 h30 v30 h-30 z M5,75 v20 h20 v-20 z M10,80 h10 v10 h-10 z M40,10 h10 v10 h-10 z M55,10 h10 v10 h-10 z M40,30 h20 v10 h-20 z M10,45 h15 v10 h-15 z M35,45 h10 v20 h-10 z M55,45 h20 v10 h-20 z M80,45 h10 v10 h-10 z M45,70 h15 v10 h-15 z M70,65 h10 v15 h-10 z M85,75 h10 v20 h-10 z M40,85 h20 v10 h-20 z M65,85 h10 v10 h-10 z" />
+                  <!-- Center logo badge -->
+                  <rect x="36" y="38" width="28" height="24" rx="4" fill="#0A0A0A" />
+                  <text x="44" y="54" font-size="9" font-family="sans-serif" font-weight="bold" fill="#ffffff" text-anchor="middle">quitz</text>
+                  <text x="58" y="54" font-size="10" font-family="sans-serif" font-weight="900" fill="#84CC16" text-anchor="middle">Z</text>
+                </svg>
+              </div>
+
+              <div>
+                <span class="text-xs font-bold text-white block">Scan to Install quitzZ</span>
+                <span class="text-[10px] text-neutral-400">Direct Play Store Download • Android 8.0+</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       11. FOOTER & DISCLAIMER
+       ========================================================================= -->
+  <footer class="bg-black text-neutral-400 text-xs py-14 border-t border-neutral-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+      
+      <!-- Top Footer Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        
+        <!-- Brand Col with Logo -->
+        <div class="space-y-3">
+          <a href="#" class="inline-block">
+            <img src="logo-cropped.png" alt="quitzZ Official Logo" class="h-10 w-auto object-contain" />
+          </a>
+          <p class="text-neutral-500 text-xs leading-relaxed">
+            The gamified quit-smoking companion helping thousands reclaim their lungs, wealth, and mental freedom.
+          </p>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="space-y-2">
+          <div class="text-white font-bold text-sm">Product</div>
+          <ul class="space-y-1.5 text-neutral-400">
+            <li><a href="#features" class="hover:text-[#84CC16] transition-colors">Core Features</a></li>
+            <li><a href="#calculator" class="hover:text-[#84CC16] transition-colors">Savings Calculator</a></li>
+            <li><a href="#craving-breaker" class="hover:text-[#84CC16] transition-colors">60s Craving Reset</a></li>
+            <li><a href="#timeline" class="hover:text-[#84CC16] transition-colors">Health Roadmap</a></li>
+          </ul>
+        </div>
+
+        <!-- Resources -->
+        <div class="space-y-2">
+          <div class="text-white font-bold text-sm">Support & Science</div>
+          <ul class="space-y-1.5 text-neutral-400">
+            <li><a href="#" class="hover:text-[#84CC16] transition-colors">CBT Clinical Guide</a></li>
+            <li><a href="#" class="hover:text-[#84CC16] transition-colors">Vagus Nerve Research</a></li>
+            <li><a href="#" class="hover:text-[#84CC16] transition-colors">Help Center & SOS</a></li>
+            <li><a href="#" class="hover:text-[#84CC16] transition-colors">Quitters Community</a></li>
+          </ul>
+        </div>
+
+        <!-- Legal -->
+        <div class="space-y-2">
+          <div class="text-white font-bold text-sm">Legal & Privacy</div>
+          <ul class="space-y-1.5 text-neutral-400">
+            <li><a href="#" class="hover:text-[#84CC16] transition-colors">Privacy Policy</a></li>
+            <li><a href="#" class="hover:text-[#84CC16] transition-colors">Terms of Service</a></li>
+            <li><a href="#" class="hover:text-[#84CC16] transition-colors">Cookie Preferences</a></li>
+            <li><a href="#" class="hover:text-[#84CC16] transition-colors">Security Overview</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- Medical Disclaimer -->
+      <div class="p-4 rounded-2xl bg-neutral-950 border border-neutral-900 text-neutral-500 text-[11px] leading-relaxed">
+        <strong class="text-neutral-400">Medical Disclaimer:</strong> quitzZ is a behavioral coaching and habit-tracking application designed to support smoking cessation. It does not provide medical diagnoses or replace clinical prescriptions. Always consult a certified healthcare professional before starting or altering any smoking cessation regimen or medical treatment.
+      </div>
+
+      <!-- Bottom copyright & socials -->
+      <div class="pt-6 border-t border-neutral-900 flex flex-col sm:flex-row items-center justify-between gap-4 text-neutral-500 text-xs">
+        <div>
+          &copy; 2026 quitzZ Inc. All rights reserved. QUIT. BREATHE. FREE.
+        </div>
+        <div class="flex items-center gap-4">
+          <a href="#" class="hover:text-[#84CC16] transition-colors"><i data-lucide="twitter" class="w-4 h-4"></i></a>
+          <a href="#" class="hover:text-[#84CC16] transition-colors"><i data-lucide="instagram" class="w-4 h-4"></i></a>
+          <a href="#" class="hover:text-[#84CC16] transition-colors"><i data-lucide="youtube" class="w-4 h-4"></i></a>
+          <a href="#" class="hover:text-[#84CC16] transition-colors"><i data-lucide="github" class="w-4 h-4"></i></a>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="app.js?v=3"></script>
+  <script>
+    // Initialize Lucide icons on load
+    if (window.lucide) {
+      lucide.createIcons();
+    }
+  </script>
+</body>
+</html>
