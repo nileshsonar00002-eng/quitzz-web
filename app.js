@@ -439,35 +439,46 @@ function initGlobalImpactCounter() {
   let hasStarted = false;
   let startTime = null;
 
+  function startCounter() {
+    if (hasStarted) return;
+    hasStarted = true;
+    startTime = performance.now();
+
+    // 1. Continuous live counter updating every 150ms at 175,000 cigarettes per second
+    const ratePerSecond = 175000;
+    
+    setInterval(() => {
+      const elapsedSeconds = (performance.now() - startTime) / 1000;
+      const currentCount = Math.floor(elapsedSeconds * ratePerSecond);
+      counterEl.textContent = currentCount.toLocaleString('en-US');
+    }, 150);
+
+    // 2. Smooth count-up animation for supporting stats
+    if (smokersEl) {
+      animateValue(smokersEl, 0, 1.1, 1800, (v) => v.toFixed(1) + ' Billion+');
+    }
+    if (deathsEl) {
+      animateValue(deathsEl, 0, 8, 1800, (v) => Math.round(v) + ' Million+');
+    }
+  }
+
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
-      if (entry.isIntersecting && !hasStarted) {
-        hasStarted = true;
-        startTime = performance.now();
-
-        // 1. Continuous live counter updating every 150ms at 175,000 cigarettes per second
-        const ratePerSecond = 175000;
-        
-        setInterval(() => {
-          const elapsedSeconds = (performance.now() - startTime) / 1000;
-          const currentCount = Math.floor(elapsedSeconds * ratePerSecond);
-          counterEl.textContent = currentCount.toLocaleString('en-US');
-        }, 150);
-
-        // 2. Smooth count-up animation for supporting stats
-        // Smokers count-up: 0 to 1.1 Billion+
-        if (smokersEl) {
-          animateValue(smokersEl, 0, 1.1, 1800, (v) => v.toFixed(1) + ' Billion+');
-        }
-        // Deaths count-up: 0 to 8 Million+
-        if (deathsEl) {
-          animateValue(deathsEl, 0, 8, 1800, (v) => Math.round(v) + ' Million+');
-        }
+      if (entry.isIntersecting) {
+        startCounter();
       }
     });
-  }, { threshold: 0.2 });
+  }, { threshold: 0.05 });
 
   observer.observe(section);
+
+  // Fallback trigger if hero is already in viewport on load
+  setTimeout(() => {
+    const rect = section.getBoundingClientRect();
+    if (rect.top < window.innerHeight && rect.bottom >= 0) {
+      startCounter();
+    }
+  }, 100);
 }
 
 function animateValue(element, start, end, duration, formatter) {
