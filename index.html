@@ -275,6 +275,68 @@
   </section>
 
   <!-- =========================================================================
+       GLOBAL IMPACT LIVE STATS SECTION
+       ========================================================================= -->
+  <section id="global-impact" class="py-16 md:py-20 bg-obsidian relative border-t border-charcoal-border overflow-hidden">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-8">
+      
+      <!-- Section Tag / Icon -->
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#84CC16]/10 border border-[#84CC16]/30 text-[#84CC16] text-xs font-bold uppercase tracking-wider">
+        <i data-lucide="globe" class="w-3.5 h-3.5"></i>
+        <span>Global Crisis In Real-Time</span>
+      </div>
+
+      <!-- Centered Heading -->
+      <h2 class="font-display text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight">
+        While You Read This...
+      </h2>
+
+      <!-- Main Live Continuous Counter Card -->
+      <div class="glass-card p-8 sm:p-10 rounded-3xl border border-neutral-800 shadow-2xl space-y-3 relative overflow-hidden max-w-3xl mx-auto">
+        <!-- Live Ticker Number -->
+        <div id="live-global-counter" class="font-display text-5xl sm:text-6xl lg:text-7xl font-black text-[#84CC16] tracking-tight tabular-nums drop-shadow-[0_0_20px_rgba(132,204,22,0.35)]">
+          0
+        </div>
+        <!-- Subtitle -->
+        <p class="text-neutral-400 text-sm sm:text-base font-medium">
+          cigarettes lit worldwide since you opened this page
+        </p>
+      </div>
+
+      <!-- Supporting Stats Side-by-Side Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 max-w-2xl mx-auto">
+        
+        <!-- Stat 1 -->
+        <div class="glass-card-interactive p-6 rounded-2xl border border-neutral-800 space-y-1.5 text-center">
+          <div class="font-display text-3xl sm:text-4xl font-extrabold text-white" id="stat-smokers-val">
+            0 Billion+
+          </div>
+          <div class="text-xs sm:text-sm font-semibold text-neutral-400 uppercase tracking-wider">
+            Smokers Worldwide
+          </div>
+        </div>
+
+        <!-- Stat 2 -->
+        <div class="glass-card-interactive p-6 rounded-2xl border border-neutral-800 space-y-1.5 text-center">
+          <div class="font-display text-3xl sm:text-4xl font-extrabold text-rose-400" id="stat-deaths-val">
+            0 Million+
+          </div>
+          <div class="text-xs sm:text-sm font-semibold text-neutral-400 uppercase tracking-wider">
+            Deaths Per Year
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Disclaimer -->
+      <p class="text-neutral-500 text-xs max-w-xl mx-auto leading-relaxed">
+        Estimates based on global consumption data (WHO/Tobacco Atlas). Illustrative, not a live global tracker.
+      </p>
+
+    </div>
+  </section>
+
+  <!-- =========================================================================
        3. LIVE SAVINGS & HEALTH CALCULATOR SECTION
        ========================================================================= -->
   <section id="calculator" class="py-20 md:py-28 relative bg-obsidian border-t border-charcoal-border">
@@ -1201,7 +1263,7 @@
   </footer>
 
   <!-- Scripts -->
-  <script src="app.js?v=3"></script>
+  <script src="app.js?v=6"></script>
   <script>
     // Initialize Lucide icons on load
     if (window.lucide) {

@@ -2,6 +2,7 @@
 
 document.addEventListener('DOMContentLoaded', () => {
   initNavbar();
+  initGlobalImpactCounter();
   initCalculator();
   initCravingBreaker();
   initStatsCounter();
@@ -422,4 +423,68 @@ function initFaqAccordion() {
       });
     }
   });
+}
+
+/* -------------------------------------------------------------
+ * 7. Global Impact Live Real-Time Cigarettes Counter (175,000/sec)
+ * ----------------------------------------------------------- */
+function initGlobalImpactCounter() {
+  const section = document.getElementById('global-impact');
+  const counterEl = document.getElementById('live-global-counter');
+  const smokersEl = document.getElementById('stat-smokers-val');
+  const deathsEl = document.getElementById('stat-deaths-val');
+
+  if (!section || !counterEl) return;
+
+  let hasStarted = false;
+  let startTime = null;
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && !hasStarted) {
+        hasStarted = true;
+        startTime = performance.now();
+
+        // 1. Continuous live counter updating every 150ms at 175,000 cigarettes per second
+        const ratePerSecond = 175000;
+        
+        setInterval(() => {
+          const elapsedSeconds = (performance.now() - startTime) / 1000;
+          const currentCount = Math.floor(elapsedSeconds * ratePerSecond);
+          counterEl.textContent = currentCount.toLocaleString('en-US');
+        }, 150);
+
+        // 2. Smooth count-up animation for supporting stats
+        // Smokers count-up: 0 to 1.1 Billion+
+        if (smokersEl) {
+          animateValue(smokersEl, 0, 1.1, 1800, (v) => v.toFixed(1) + ' Billion+');
+        }
+        // Deaths count-up: 0 to 8 Million+
+        if (deathsEl) {
+          animateValue(deathsEl, 0, 8, 1800, (v) => Math.round(v) + ' Million+');
+        }
+      }
+    });
+  }, { threshold: 0.2 });
+
+  observer.observe(section);
+}
+
+function animateValue(element, start, end, duration, formatter) {
+  const frameDuration = 1000 / 60;
+  const totalFrames = Math.round(duration / frameDuration);
+  let frame = 0;
+
+  const timer = setInterval(() => {
+    frame++;
+    const progress = frame / totalFrames;
+    // Ease-out cubic
+    const current = start + (end - start) * (1 - Math.pow(1 - progress, 3));
+    element.textContent = formatter(current);
+
+    if (frame >= totalFrames) {
+      clearInterval(timer);
+      element.textContent = formatter(end);
+    }
+  }, frameDuration);
 }
