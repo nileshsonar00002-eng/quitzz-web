@@ -6,7 +6,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initCalculator();
   initCravingBreaker();
   initStatsCounter();
-  initTestimonials();
   initFaqAccordion();
 });
 
@@ -347,56 +346,7 @@ function initStatsCounter() {
   if (statsSection) observer.observe(statsSection);
 }
 
-/* -------------------------------------------------------------
- * 5. Testimonial Carousel
- * ----------------------------------------------------------- */
-function initTestimonials() {
-  const slides = document.querySelectorAll('.testimonial-slide');
-  const prevBtn = document.getElementById('test-prev-btn');
-  const nextBtn = document.getElementById('test-next-btn');
-  const indicators = document.querySelectorAll('.test-indicator');
 
-  if (!slides.length) return;
-  let currentIndex = 0;
-
-  function showSlide(index) {
-    slides.forEach((slide, i) => {
-      slide.classList.toggle('hidden', i !== index);
-    });
-    indicators.forEach((dot, i) => {
-      dot.classList.toggle('bg-[#84CC16]', i === index);
-      dot.classList.toggle('bg-neutral-700', i !== index);
-    });
-    currentIndex = index;
-  }
-
-  if (nextBtn) {
-    nextBtn.addEventListener('click', () => {
-      let nextIndex = (currentIndex + 1) % slides.length;
-      showSlide(nextIndex);
-    });
-  }
-
-  if (prevBtn) {
-    prevBtn.addEventListener('click', () => {
-      let prevIndex = (currentIndex - 1 + slides.length) % slides.length;
-      showSlide(prevIndex);
-    });
-  }
-
-  indicators.forEach(dot => {
-    dot.addEventListener('click', () => {
-      const idx = parseInt(dot.getAttribute('data-index'), 10);
-      showSlide(idx);
-    });
-  });
-
-  // Auto advance every 6s
-  setInterval(() => {
-    let nextIndex = (currentIndex + 1) % slides.length;
-    showSlide(nextIndex);
-  }, 6000);
-}
 
 /* -------------------------------------------------------------
  * 6. FAQ Accordion
