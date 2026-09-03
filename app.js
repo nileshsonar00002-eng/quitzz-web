@@ -136,9 +136,9 @@ function initCalculator() {
     pricePresets.forEach(btn => {
       const val = parseFloat(btn.getAttribute('data-val'));
       if (val === pricePerStick) {
-        btn.className = 'price-preset text-[11px] px-2.5 py-1 rounded-lg bg-amber-500/20 border border-amber-500/40 text-amber-400 font-bold transition-colors';
+        btn.className = 'price-preset text-[11px] px-2.5 py-1 rounded-lg bg-neutral-800 border border-neutral-600 text-white font-bold transition-colors';
       } else {
-        btn.className = 'price-preset text-[11px] px-2.5 py-1 rounded-lg bg-neutral-900 hover:bg-amber-500/20 border border-neutral-800 text-neutral-300 hover:text-amber-400 transition-colors';
+        btn.className = 'price-preset text-[11px] px-2.5 py-1 rounded-lg bg-neutral-900 hover:bg-neutral-800 border border-neutral-800 text-neutral-400 hover:text-white transition-colors';
       }
     });
   }
