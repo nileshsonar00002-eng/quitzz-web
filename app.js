@@ -5,7 +5,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initGlobalImpactCounter();
   initCalculator();
   initCravingBreaker();
-  initStatsCounter();
   initFaqAccordion();
 });
 
@@ -306,45 +305,7 @@ function initCravingBreaker() {
   if (resetBtn) resetBtn.addEventListener('click', resetSession);
 }
 
-/* -------------------------------------------------------------
- * 4. Animated Stats Counter (Intersection Observer)
- * ----------------------------------------------------------- */
-function initStatsCounter() {
-  const statElements = document.querySelectorAll('.counter-val');
-  let hasAnimated = false;
 
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting && !hasAnimated) {
-        hasAnimated = true;
-        statElements.forEach(el => {
-          const target = parseInt(el.getAttribute('data-target'), 10);
-          const suffix = el.getAttribute('data-suffix') || '';
-          const prefix = el.getAttribute('data-prefix') || '';
-          const duration = 1800;
-          const frameDuration = 1000 / 60;
-          const totalFrames = Math.round(duration / frameDuration);
-          let frame = 0;
-
-          const counter = setInterval(() => {
-            frame++;
-            const progress = frame / totalFrames;
-            const currentVal = Math.round(target * (1 - Math.pow(1 - progress, 3)));
-            el.textContent = prefix + currentVal.toLocaleString('en-IN') + suffix;
-
-            if (frame >= totalFrames) {
-              clearInterval(counter);
-              el.textContent = prefix + target.toLocaleString('en-IN') + suffix;
-            }
-          }, frameDuration);
-        });
-      }
-    });
-  }, { threshold: 0.2 });
-
-  const statsSection = document.getElementById('stats-section');
-  if (statsSection) observer.observe(statsSection);
-}
 
 
 
